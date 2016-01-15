@@ -32,8 +32,8 @@ __copyright__ = "Copyright 2013-2014, a12d404.net"
 __status__ = "Prototype"  # ("Prototype", "Development", "Testing", "Production")
 
 SCRIPT_PATH = os.path.dirname( os.path.realpath( __file__ ) )
-LOOKUP_HISTORY_FILE = os.path.join(SCRIPT_PATH, "history.log")
-CONFIG_FILE = os.path.join(SCRIPT_PATH, "cfup.json")
+LOOKUP_HISTORY_FILE = os.path.join(SCRIPT_PATH, "etc", "history.log")
+CONFIG_FILE = os.path.join(SCRIPT_PATH, "etc", "cfup.json")
 
 REGEX_IP = re.compile(r'[0-9]+(?:\.[0-9]+){3}')
 EXIT_SUCCESS = "success"
@@ -368,7 +368,7 @@ def main(argv):
             lh.add(ip)
         cmd_update_remote_entries()
     else:
-        print("Available commands: list-zones, list-entries, update-entry")
+        print("Available commands: list-zones, list-entries, update-entries")
 
     return True
 
