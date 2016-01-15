@@ -1,2 +1,0 @@
-# m h  dom mon dow   command
-1 * * * * /opt/cfup/cfup.py update-entries >> /var/log/cron.log 2>&1
