@@ -362,6 +362,7 @@ def main(argv):
         lh = LookupHistory(LOOKUP_HISTORY_FILE)
         ip = get_wan_ip()
         if not ip:
+            print("[E] Couldn't get IP address!")
             return False
         if (not lh.last_ip_is(ip)) and cmd_update_entries(ip):
             lh.add(ip)
