@@ -4,7 +4,6 @@ MAINTAINER marpie@a12d404.net
 # Install required applications
 RUN apt-get update && apt-get install -y \
     ca-certificates \
-    cron \
     python \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
@@ -15,11 +14,10 @@ RUN mkdir /opt/cfup && mkdir /data && ln -s /data /opt/cfup/etc
 ADD cfup.py /opt/cfup/cfup.py
 RUN chmod 0755 /opt/cfup/cfup.py
 
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
-
 # Add job to cron
-RUN echo "*/5 * * * * /opt/cfup/cfup.py update-entries >> /var/log/cron.log 2>&1" >> /etc/crontab && echo "" >> /etc/crontab
+RUN \
+    echo -e "#!/bin/sh\ntouch /var/log/cfup.log\nwhile true; do /opt/cfup/cfup.py update-entries &> /var/log/cfup.log; sleep 5m; done" > /opt/cfup/start.sh && \
+    echo 0755 /opt/cfup/start.sh
 
 # Run the command on container startup
-CMD cron && tail -f /var/log/cron.log
+CMD /opt/cfup/start.sh && tail -f /var/log/cfup.log
