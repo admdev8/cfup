@@ -14,7 +14,7 @@ RUN mkdir /opt/cfup && mkdir /data && ln -s /data /opt/cfup/etc
 ADD cfup.py /opt/cfup/cfup.py
 RUN chmod 0755 /opt/cfup/cfup.py
 
-# Add job to cron
+# Create service shell script to invoke cfup every 5 minutes.
 RUN \
     echo -e "#!/bin/sh\ntouch /var/log/cfup.log\nwhile true; do /opt/cfup/cfup.py update-entries &> /var/log/cfup.log; sleep 5m; done" > /opt/cfup/start.sh && \
     echo 0755 /opt/cfup/start.sh
